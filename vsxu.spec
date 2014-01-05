@@ -15,10 +15,13 @@ Source0:	https://github.com/vovoid/vsxu/archive/%{version}/%{name}-%{version}.ta
 Patch0:		%{name}-glfw3.patch
 Patch1:		%{name}-icons.patch
 Patch2:		%{name}-desktop.patch
+Patch3:		%{name}-system-ftgl.patch
 URL:		http://www.vsxu.com/
 BuildRequires:	OpenGL-devel
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	cmake >= 2.8
+BuildRequires:	ftgl-devel
 BuildRequires:	glew-devel >= 1.6.0
 BuildRequires:	glfw-devel >= 3
 BuildRequires:	jack-audio-connection-kit-devel
@@ -27,6 +30,7 @@ BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	opencv-devel
 BuildRequires:	pkgconfig
+BuildRequires:	pulseaudio-devel
 BuildRequires:	xorg-lib-libXrandr >= 1.3.0
 Requires:	OpenGL >= 2.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -84,6 +88,7 @@ Pliki nagłówkowe bibliotek VSXu.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 install -d build
