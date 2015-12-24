@@ -7,7 +7,7 @@ Summary:	VSXu Music Visualizer
 Summary(pl.UTF-8):	VSXu - wizualizacja muzyki
 Name:		vsxu
 Version:	0.4.2
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		Libraries
 Source0:	https://github.com/vovoid/vsxu/archive/%{version}/%{name}-%{version}.tar.gz
