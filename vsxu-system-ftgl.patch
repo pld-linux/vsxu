@@ -1,34 +1,116 @@
---- vsxu-0.4.2/plugins/src/render.text/CMakeLists.txt.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/plugins/src/render.text/CMakeLists.txt	2014-01-05 09:01:09.322415946 +0100
-@@ -7,14 +7,14 @@ message("configuring vsxu module
- 
- 
- find_package(Freetype REQUIRED)
--include_directories(${FREETYPE_INCLUDE_DIRS})
-+find_package(FTGL REQUIRED)
-+include_directories(${FREETYPE_INCLUDE_DIRS} ${FTGL_INCLUDE_DIR})
- file(GLOB LOCAL_SOURCES "*.cpp")
- file(GLOB API_STUBS "api_stubs/*.cpp")
- 
- project (${module_id})
- include (../cmake_globals.txt)
--include(./_sources)
- add_library(${module_id} MODULE ${LOCAL_SOURCES} ${API_STUBS} ${SOURCES})
- include(../cmake_suffix.txt)
- 
--target_link_libraries(${module_id} vsxu_engine ${FREETYPE_LIBRARIES})
-+target_link_libraries(${module_id} vsxu_engine ${FREETYPE_LIBRARIES} ${FTGL_LIBRARY})
---- vsxu-0.4.2/plugins/src/render.text/main.cpp.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/plugins/src/render.text/main.cpp	2014-01-05 08:59:45.182419478 +0100
+--- vsxu-0.5.1/plugins/src/render.text/render_text.cpp.orig	2016-03-02 21:11:01.120340252 +0100
++++ vsxu-0.5.1/plugins/src/render.text/render_text.cpp	2016-03-02 21:12:44.310335922 +0100
 @@ -26,10 +26,7 @@
  #include "vsx_param.h"
  #include "vsx_module.h"
- 
+ #include <vsx_font.h>
 -#include "ftgl/FTGLPolygonFont.h"
 -#include "ftgl/FTGLBitmapFont.h"
 -#include "ftgl/FTGLOutlineFont.h"
 -#include "ftgl/FTGLTextureFont.h"
 +#include <FTGL/ftgl.h>
- #include "vsx_math_3d.h"
+ 
+ typedef struct
+ {
+--- vsxu-0.5.1/plugins/src/render.text/CMakeLists.txt.orig	2014-12-14 14:01:04.000000000 +0100
++++ vsxu-0.5.1/plugins/src/render.text/CMakeLists.txt	2016-03-02 21:07:10.127016617 +0100
+@@ -12,7 +12,7 @@
+ CREATE_STATIC_GLUE(${module_id})
+ 
+ # find the local source files
+-file(GLOB SOURCES "*.cpp" "ftgl/*.cpp")
++file(GLOB SOURCES "*.cpp")
+ 
+ if(WIN32)
+   include_directories(lib/win32/include)
+--- vsxu-0.5.1/engine_graphics/CMakeLists.txt.orig	2014-12-14 14:01:04.000000000 +0100
++++ vsxu-0.5.1/engine_graphics/CMakeLists.txt	2016-03-02 21:10:07.443675839 +0100
+@@ -14,6 +14,7 @@
+ find_package(PNG REQUIRED)
+ find_package(JPEG REQUIRED)
+ find_package(Freetype REQUIRED)
++find_package(FTGL REQUIRED)
  
  
+ ################################################################################
+@@ -26,12 +27,11 @@
+   ${JPEG_INCLUDE_DIR}
+   ${CMAKE_SOURCE_DIR}/
+   ${CMAKE_SOURCE_DIR}/engine_graphics/include
+-  ${CMAKE_SOURCE_DIR}/engine_graphics/include/ftgl
+   ${CMAKE_SOURCE_DIR}/engine/include
+   ${CMAKE_SOURCE_DIR}/profiler/include
+ )
+ 
+-include_directories(${FREETYPE_INCLUDE_DIRS})
++include_directories(${FREETYPE_INCLUDE_DIRS} ${FTGL_INCLUDE_DIR})
+ 
+ if(WIN32)
+   include_directories(lib/win32/include)
+@@ -72,30 +72,6 @@
+   src/vsx_texture.cpp
+   src/vsx_gl_state.cpp
+   src/gl_helper.cpp
+-  src/ftgl/FTBitmapGlyph.cpp
+-  src/ftgl/FTBufferGlyph.cpp
+-  src/ftgl/FTCharmap.cpp
+-  src/ftgl/FTContour.cpp
+-  src/ftgl/FTExtrdGlyph.cpp
+-  src/ftgl/FTFace.cpp
+-  src/ftgl/FTFont.cpp
+-  src/ftgl/FTGLBitmapFont.cpp
+-  src/ftgl/FTGLBufferFont.cpp
+-  src/ftgl/FTGLExtrdFont.cpp
+-  src/ftgl/FTGLGlyph.cpp
+-  src/ftgl/FTGLOutlineFont.cpp
+-  src/ftgl/FTGLPixmapFont.cpp
+-  src/ftgl/FTGLPolygonFont.cpp
+-  src/ftgl/FTGLTextureFont.cpp
+-  src/ftgl/FTGlyphContainer.cpp
+-  src/ftgl/FTLibrary.cpp
+-  src/ftgl/FTOutlineGlyph.cpp
+-  src/ftgl/FTPixmapGlyph.cpp
+-  src/ftgl/FTPoint.cpp
+-  src/ftgl/FTPolyGlyph.cpp
+-  src/ftgl/FTSize.cpp
+-  src/ftgl/FTTextureGlyph.cpp
+-  src/ftgl/FTVectoriser.cpp
+ )
+ 
+ if (VSXU_OPENGL_ES_2_0 EQUAL 1)
+@@ -159,6 +135,7 @@
+   ${OPENGL_LIBRARIES}
+   ${CMAKE_THREAD_LIBS_INIT}
+   ${GLEW_LIBRARY}
++  ${FTGL_LIBRARY}
+   vsxu_engine
+ )
+ 
+--- vsxu-0.5.1/engine_graphics/src/vsx_font.cpp.orig	2014-12-14 14:01:04.000000000 +0100
++++ vsxu-0.5.1/engine_graphics/src/vsx_font.cpp	2016-03-03 22:15:32.323218595 +0100
+@@ -30,10 +30,7 @@
+ #include "vsx_font.h"
+ 
+ #ifndef VSX_FONT_NO_FT
+-#include "ftgl/FTGLPolygonFont.h"
+-#include "ftgl/FTGLBitmapFont.h"
+-#include "ftgl/FTGLOutlineFont.h"
+-#include "ftgl/FTGLTextureFont.h"
++#include <FTGL/ftgl.h>
+ #endif
+ 
+ 
+--- vsxu-0.5.1/engine_graphics/src/vsx_font_outline.cpp.orig	2014-12-14 14:01:04.000000000 +0100
++++ vsxu-0.5.1/engine_graphics/src/vsx_font_outline.cpp	2016-03-03 22:15:52.329884424 +0100
+@@ -1,10 +1,7 @@
+ #include "vsx_gl_global.h"
+ #include "vsx_gl_state.h"
+ #include "vsx_font_outline.h"
+-#include "ftgl/FTGLPolygonFont.h"
+-#include "ftgl/FTGLBitmapFont.h"
+-#include "ftgl/FTGLOutlineFont.h"
+-#include "ftgl/FTGLTextureFont.h"
++#include <FTGL/ftgl.h>
+ 
+ 
+ class font_outline_holder

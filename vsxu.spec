@@ -6,12 +6,13 @@
 Summary:	VSXu Music Visualizer
 Summary(pl.UTF-8):	VSXu - wizualizacja muzyki
 Name:		vsxu
-Version:	0.4.2
-Release:	5
-License:	GPL v2
+Version:	0.5.1
+Release:	1
+License:	GPL v3
 Group:		Libraries
-Source0:	https://github.com/vovoid/vsxu/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	bbd73438386aa3eede5c3b104d706104
+#Source0Download: https://github.com/vovoid/vsxu/releases
+Source0:	https://github.com/vovoid/vsxu/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	b4c31f1b0e9def4fa4920341cda3708f
 Patch0:		%{name}-glfw3.patch
 Patch1:		%{name}-icons.patch
 Patch2:		%{name}-desktop.patch
@@ -112,9 +113,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 # COPYING contains copyright notes, not only GPL text
-%doc CHANGELOG COPYING README.md TODO 
+%doc AUTHORS CHANGELOG COPYING README.md
+%attr(755,root,root) %{_bindir}/obj2vxm
+%attr(755,root,root) %{_bindir}/vsxl
 %attr(755,root,root) %{_bindir}/vsxu_artiste
 %attr(755,root,root) %{_bindir}/vsxu_player
+%attr(755,root,root) %{_bindir}/vsxu_profiler
 %attr(755,root,root) %{_bindir}/vsxu_server
 %attr(755,root,root) %{_bindir}/vsxz
 %dir %{_libdir}/vsxu
@@ -135,6 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libvsxu_engine.so
 %attr(755,root,root) %{_libdir}/libvsxu_engine_audiovisual.so
 %attr(755,root,root) %{_libdir}/libvsxu_engine_graphics.so
+%attr(755,root,root) %{_libdir}/libvsx_widget.so
 
 %files devel
 %defattr(644,root,root,755)
