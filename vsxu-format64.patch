@@ -1,0 +1,20 @@
+--- vsxu-0.6.3/lib/common/include/string/vsx_string_helper.h.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/lib/common/include/string/vsx_string_helper.h	2020-04-02 06:24:31.508349532 +0200
+@@ -39,7 +39,7 @@
+   inline vsx_string<>ui642s(const uint64_t &in)
+   {
+     char string_res[256] = "";
+-    #if COMPILER == COMPILER_VISUAL_STUDIO
++    #if (COMPILER == COMPILER_VISUAL_STUDIO) || !defined(_LP64)
+     sprintf(string_res,"%llu",in);
+     #else
+     sprintf(string_res,"%lu",in);
+@@ -67,7 +67,7 @@
+   inline vsx_string<>i2x(const uint64_t &in)
+   {
+     char string_res[256] = "";
+-    #if COMPILER == COMPILER_VISUAL_STUDIO
++    #if (COMPILER == COMPILER_VISUAL_STUDIO) || !defined(_LP64)
+       sprintf(string_res,"%llx",in);
+     #else
+       sprintf(string_res,"%lx",in);

@@ -1,0 +1,22 @@
+vsx_engine_audiovisual is now header-only library, so no linking possible
+--- vsxu-0.6.3/libvsx.pc.in.dynamic.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/libvsx.pc.in.dynamic	2020-04-02 18:11:25.565239537 +0200
+@@ -7,5 +7,5 @@
+ Description: VSXu is an OpenGL-based modular programming environment, mainly to visualize music and create graphic effects in real-time.
+ Version: @VSXU_VERSION@
+ Requires: glew libpng
+-Libs: -L${prefix}/${libdir} -lvsx_application -lvsx_common -lvsx_compression -lvsx_engine_audiovisual -lvsx_engine_graphics -lvsx_engine -lvsx_widget
+-Cflags: -I${prefix}/${includedir}/ -I${prefix}/${includedir}/application -I${prefix}/${includedir}/common -I${prefix}/${includedir}/compression -I${prefix}/${includedir}/engine -I${prefix}/${includedir}/engine_audiovisual -I${prefix}/${includedir}/engine_graphics -I${prefix}/${includedir}/widget
++Libs: -L${prefix}/${libdir} -lvsx_application -lvsx_common -lvsx_compression -lvsx_engine_graphics -lvsx_engine -lvsx_widget
++Cflags: -I${prefix}/${includedir}/ -I${prefix}/${includedir}/application -I${prefix}/${includedir}/common -I${prefix}/${includedir}/compression -I${prefix}/${includedir}/engine -I${prefix}/${includedir}/engine/audiovisual -I${prefix}/${includedir}/engine_graphics -I${prefix}/${includedir}/widget
+--- vsxu-0.6.3/libvsx.pc.in.static.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/libvsx.pc.in.static	2020-04-02 18:11:53.328422464 +0200
+@@ -8,6 +8,6 @@
+ Description: VSXu is an OpenGL-based modular programming environment, mainly to visualize music and create graphic effects in real-time.
+ Version: @VSXU_VERSION@
+ Requires:
+-Libs: -L${prefix}/${libdir} -lvsxu_engine -lvsxu_engine_graphics -lvsxu_engine_audiovisual -L${prefix}/${libdir_plugins} @VSXU_PLUGIN_PKGCONFIG_LIBS@
+-Cflags: -I${prefix}/${includedir}/ -I${prefix}/${includedir}/application -I${prefix}/${includedir}/common -I${prefix}/${includedir}/compression -I${prefix}/${includedir}/engine -I${prefix}/${includedir}/engine_audiovisual -I${prefix}/${includedir}/engine_graphics -I${prefix}/${includedir}/widget
++Libs: -L${prefix}/${libdir} -lvsxu_engine -lvsxu_engine_graphics -L${prefix}/${libdir_plugins} @VSXU_PLUGIN_PKGCONFIG_LIBS@
++Cflags: -I${prefix}/${includedir}/ -I${prefix}/${includedir}/application -I${prefix}/${includedir}/common -I${prefix}/${includedir}/compression -I${prefix}/${includedir}/engine -I${prefix}/${includedir}/engine/audiovisual -I${prefix}/${includedir}/engine_graphics -I${prefix}/${includedir}/widget
+ 

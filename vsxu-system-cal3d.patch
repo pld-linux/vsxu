@@ -1,0 +1,112 @@
+--- vsxu-0.6.3/plugins/src/mesh.importers/CMakeLists.txt.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/plugins/src/mesh.importers/CMakeLists.txt	2020-03-29 21:23:58.368261811 +0200
+@@ -13,10 +13,6 @@
+   add_definitions( -fPIC -fpermissive )
+ endif(UNIX)
+ 
+-set(DEFINITIONS
+-  -DCAL3D_EXPORTS
+-)
+-
+ if(NOT MSVC)
+   set(DEFINITIONS ${DEFINITIONS}
+     -Wno-narrowing
+@@ -26,64 +22,9 @@
+   )
+ endif()
+ 
+-set(INCLUDE_DIRS ${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src)
+-
+-add_definitions(${DEFINITIONS})
+-
+-include_directories(${INCLUDE_DIRS})
+-
+ # find the local source files
+ file(GLOB LOCAL_SOURCES "*.cpp")
+ 
+-set(SOURCES
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/animation_action.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/animation.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/animation_cycle.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/bone.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/buffersource.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/cal3d_wrapper.cpp
+-#${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/calxmlbindings.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coreanimatedmorph.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coreanimation.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/corebone.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/corekeyframe.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/corematerial.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coremesh.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coremodel.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coremorphkeyframe.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coremorphtrack.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coreskeleton.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coresubmesh.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coresubmorphtarget.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/coretrack.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/dualquaternion.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/error.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/global.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/hardwaremodel.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/loader.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/matrix.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/mesh.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/mixer.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/model.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/morphtargetmixer.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/physique.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/physiquedualquaternion.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/platform.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/quaternion.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/renderer.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/saver.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/skeleton.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/springsystem.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/streamsource.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/submesh.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/tinybind.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/tinyxml.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/tinyxmlerror.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/tinyxmlparser.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/vector.cpp
+-${CMAKE_CURRENT_LIST_DIR}/cal3d/cal3d/src/cal3d/xmlformat.cpp
+-)
+-
+ file(GLOB_RECURSE HEADER_FILES *.h)
+ 
+ # include common
+@@ -91,6 +32,7 @@
+ 
+ # actual compilation target
+ CREATE_MODULE(${module_id})
++target_link_libraries(${module_id} cal3d)
+ 
+ # include common
+ include(../cmake_suffix.txt)
+--- vsxu-0.6.3/plugins/src/mesh.importers/module_mesh_cal3d_loader_threaded.h.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/plugins/src/mesh.importers/module_mesh_cal3d_loader_threaded.h	2020-04-01 22:15:34.317282729 +0200
+@@ -367,10 +367,7 @@
+               if (h) {
+                 resources.push_back(file_path+parts[1]);
+                 char* a = engine_state->filesystem->f_gets_entire(h);
+-                TiXmlDocument doc;
+-                doc.Parse(a);
+-                free(a);
+-                CalCoreSkeletonPtr skeleton = CalLoader::loadXmlCoreSkeleton(doc);
++                CalCoreSkeletonPtr skeleton = CalLoader::loadXmlCoreSkeleton(a);
+                 if (skeleton)
+                   c_model->setCoreSkeleton( skeleton.get() );
+                 engine_state->filesystem->f_close(h);
+@@ -381,10 +378,7 @@
+               if (h) {
+                 resources.push_back(file_path+parts[1]);
+                 char* a = engine_state->filesystem->f_gets_entire(h);
+-                TiXmlDocument doc;
+-                doc.Parse(a);
+-                free(a);
+-                CalCoreMeshPtr mesh = CalLoader::loadXmlCoreMesh( doc );
++                CalCoreMeshPtr mesh = CalLoader::loadXmlCoreMesh( a );
+                 c_model->addCoreMesh( mesh.get() );
+                 if (mesh_id > -1)
+                   mesh_parts.push_back(mesh_id);

@@ -6,21 +6,27 @@
 Summary:	VSXu Music Visualizer
 Summary(pl.UTF-8):	VSXu - wizualizacja muzyki
 Name:		vsxu
-Version:	0.5.1
-Release:	3
+Version:	0.6.3
+Release:	1
 License:	GPL v3
 Group:		Libraries
 #Source0Download: https://github.com/vovoid/vsxu/releases
 Source0:	https://github.com/vovoid/vsxu/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	b4c31f1b0e9def4fa4920341cda3708f
+# Source0-md5:	96c8eb7049f8365b58c5049feb52ae29
 Patch0:		%{name}-glfw3.patch
 Patch1:		%{name}-icons.patch
 Patch2:		%{name}-desktop.patch
 Patch3:		%{name}-system-ftgl.patch
+Patch4:		%{name}-system-lodepng.patch
+Patch5:		%{name}-system-lzham-lzma.patch
+Patch6:		%{name}-system-cal3d.patch
+Patch7:		%{name}-format64.patch
+Patch8:		%{name}-pc.patch
 URL:		http://www.vsxu.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	alsa-lib-devel
+BuildRequires:	cal3d-devel
 BuildRequires:	cmake >= 2.8
 BuildRequires:	ftgl-devel
 BuildRequires:	glew-devel >= 1.6.0
@@ -29,6 +35,9 @@ BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	libpng-devel >= 2:1.2.46
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
+BuildRequires:	lodepng-devel
+BuildRequires:	lzham-devel
+BuildRequires:	lzma-sdk-devel
 BuildRequires:	opencv-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel
@@ -90,6 +99,11 @@ Pliki nagłówkowe bibliotek VSXu.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
 install -d build
@@ -115,8 +129,11 @@ rm -rf $RPM_BUILD_ROOT
 # COPYING contains copyright notes, not only GPL text
 %doc AUTHORS CHANGELOG COPYING README.md
 %attr(755,root,root) %{_bindir}/obj2vxm
+%attr(755,root,root) %{_bindir}/raw2wav
+%attr(755,root,root) %{_bindir}/vsxbt
 %attr(755,root,root) %{_bindir}/vsxl
 %attr(755,root,root) %{_bindir}/vsxu_artiste
+%attr(755,root,root) %{_bindir}/vsxu_launcher
 %attr(755,root,root) %{_bindir}/vsxu_player
 %attr(755,root,root) %{_bindir}/vsxu_profiler
 %attr(755,root,root) %{_bindir}/vsxu_server
@@ -136,12 +153,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libvsxu_engine.so
-%attr(755,root,root) %{_libdir}/libvsxu_engine_audiovisual.so
-%attr(755,root,root) %{_libdir}/libvsxu_engine_graphics.so
+%attr(755,root,root) %{_libdir}/libvsx_application.so
+%attr(755,root,root) %{_libdir}/libvsx_common.so
+%attr(755,root,root) %{_libdir}/libvsx_compression.so
+%attr(755,root,root) %{_libdir}/libvsx_engine.so
+%attr(755,root,root) %{_libdir}/libvsx_engine_graphics.so
 %attr(755,root,root) %{_libdir}/libvsx_widget.so
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/vsxu
-%{_pkgconfigdir}/libvsxu.pc
+%{_pkgconfigdir}/libvsx.pc

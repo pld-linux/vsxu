@@ -1,5 +1,5 @@
---- vsxu-0.4.2/artiste/vsxu-artiste.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/artiste/vsxu-artiste.desktop.in	2014-01-04 21:48:33.094109544 +0100
+--- vsxu-0.6.3/programs/artiste/vsxu-artiste.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
++++ vsxu-0.6.3/programs/artiste/vsxu-artiste.desktop.in	2014-01-04 21:48:33.094109544 +0100
 @@ -1,8 +1,10 @@
  [Desktop Entry]
  Name=VSXu Artiste [windowed]
@@ -12,8 +12,8 @@
  Icon=vsxu
  Type=Application
  Categories=Graphics;
---- vsxu-0.4.2/artiste/vsxu-artiste-fullscreen.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/artiste/vsxu-artiste-fullscreen.desktop.in	2014-01-04 21:49:23.687440702 +0100
+--- vsxu-0.6.3/programs/artiste/vsxu-artiste-fullscreen.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
++++ vsxu-0.6.3/programs/artiste/vsxu-artiste-fullscreen.desktop.in	2014-01-04 21:49:23.687440702 +0100
 @@ -1,8 +1,10 @@
  [Desktop Entry]
  Name=VSXu Artiste [fullscreen]
@@ -26,8 +26,8 @@
  Icon=vsxu
  Type=Application
  Categories=Graphics;
---- vsxu-0.4.2/player/vsxu-player.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/player/vsxu-player.desktop.in	2014-01-04 21:50:22.114104932 +0100
+--- vsxu-0.6.3/programs/player/vsxu-player.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
++++ vsxu-0.6.3/programs/player/vsxu-player.desktop.in	2014-01-04 21:50:22.114104932 +0100
 @@ -1,8 +1,9 @@
  [Desktop Entry]
  Name=VSXu Player [windowed]
@@ -39,8 +39,8 @@
  Icon=vsxu
  Type=Application
  Categories=AudioVideo;Audio;Player;
---- vsxu-0.4.2/player/vsxu-player-fullscreen.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/player/vsxu-player-fullscreen.desktop.in	2014-01-04 21:50:43.957437407 +0100
+--- vsxu-0.6.3/programs/player/vsxu-player-fullscreen.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
++++ vsxu-0.6.3/programs/player/vsxu-player-fullscreen.desktop.in	2014-01-04 21:50:43.957437407 +0100
 @@ -1,8 +1,9 @@
  [Desktop Entry]
  Name=VSXu Player [fullscreen]
@@ -52,8 +52,8 @@
  Icon=vsxu
  Type=Application
  Categories=AudioVideo;Audio;Player;
---- vsxu-0.4.2/server/vsxu-server.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/server/vsxu-server.desktop.in	2014-01-04 21:51:22.134102443 +0100
+--- vsxu-0.6.3/programs/server/vsxu-server.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
++++ vsxu-0.6.3/programs/server/vsxu-server.desktop.in	2014-01-04 21:51:22.134102443 +0100
 @@ -1,8 +1,10 @@
  [Desktop Entry]
  Name=VSXu server [windowed]
@@ -66,8 +66,8 @@
  Icon=vsxu
  Type=Application
  Categories=Graphics;
---- vsxu-0.4.2/server/vsxu-server-fullscreen.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
-+++ vsxu-0.4.2/server/vsxu-server-fullscreen.desktop.in	2014-01-04 21:51:53.657434467 +0100
+--- vsxu-0.6.3/programs/server/vsxu-server-fullscreen.desktop.in.orig	2013-11-24 11:00:51.000000000 +0100
++++ vsxu-0.6.3/programs/server/vsxu-server-fullscreen.desktop.in	2014-01-04 21:51:53.657434467 +0100
 @@ -1,8 +1,10 @@
  [Desktop Entry]
  Name=VSXu server [fullscreen]

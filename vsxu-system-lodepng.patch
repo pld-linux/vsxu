@@ -1,0 +1,36 @@
+--- vsxu-0.6.3/lib/engine_graphics/CMakeLists.txt.orig	2020-03-20 20:23:17.661417801 +0100
++++ vsxu-0.6.3/lib/engine_graphics/CMakeLists.txt	2020-03-23 21:20:06.305411371 +0100
+@@ -69,13 +69,6 @@
+ thirdparty/perlin/perlin.cpp
+ )
+ 
+-#lodepng
+-include_directories(
+-    thirdparty/lodepng
+-)
+-set(SOURCES_LODEPNG
+-    thirdparty/lodepng/lodepng.cpp
+-)
+ 
+ #jpeg
+ include_directories(
+@@ -88,9 +81,9 @@
+ 
+ if (VSXU_STATIC EQUAL 1)
+   #static build
+-  add_library(${module_id} STATIC ${SOURCES} ${SOURCES_PERLIN} ${HEADER_FILES} ${SOURCES_LODEPNG})
++  add_library(${module_id} STATIC ${SOURCES} ${SOURCES_PERLIN} ${HEADER_FILES})
+ else ()
+-  add_library(${module_id} SHARED ${SOURCES} ${SOURCES_PERLIN} ${HEADER_FILES} ${SOURCES_LODEPNG})
++  add_library(${module_id} SHARED ${SOURCES} ${SOURCES_PERLIN} ${HEADER_FILES})
+ endif()
+ 
+ if (UNIX)
+@@ -128,6 +121,7 @@
+ target_link_libraries(
+   ${module_id}
+   vsx_engine
++  lodepng
+   ${GLEW_LIBRARIES}
+   ${FTGL_LIBRARY}
+   ${FREETYPE_LIBRARIES}

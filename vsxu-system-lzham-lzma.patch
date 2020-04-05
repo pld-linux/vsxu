@@ -1,0 +1,84 @@
+--- vsxu-0.6.3/lib/compression/CMakeLists.txt.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/lib/compression/CMakeLists.txt	2020-03-29 20:39:11.956148687 +0200
+@@ -50,46 +50,10 @@
+   src/vsx_compression_lzham.cpp
+ )
+ 
+-
+-add_definitions(-D_7ZIP_ST)
+-set(SOURCES_LZMA
+-  thirdparty/lzma-sdk/C/Alloc.c
+-  thirdparty/lzma-sdk/C/LzmaLib.c
+-  thirdparty/lzma-sdk/C/LzmaEnc.c
+-  thirdparty/lzma-sdk/C/LzmaDec.c
+-  thirdparty/lzma-sdk/C/LzFind.c
+-)
+-
+-
+-add_definitions(
+-  -DLZHAM_NO_THREADING=1
+-  -fno-strict-aliasing
+-)
+ include_directories(
+-  ${CMAKE_SOURCE_DIR}/lib/compression/thirdparty/lzham-sdk/include
+-  ${CMAKE_SOURCE_DIR}/lib/compression/thirdparty/lzham-sdk/lzhamcomp
+-  ${CMAKE_SOURCE_DIR}/lib/compression/thirdparty/lzham-sdk/lzhamdecomp
+-)
+-set(SOURCES_LZHAM
+-  thirdparty/lzham-sdk/lzhamlib/lzham_lib.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_assert.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_checksum.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_huffman_codes.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_lzdecompbase.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_lzdecomp.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_mem.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_platform.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_prefix_coding.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_symbol_codec.cpp
+-  #thirdparty/lzham-sdk/lzhamdecomp/lzham_timer.cpp
+-  thirdparty/lzham-sdk/lzhamdecomp/lzham_vector.cpp
+-  thirdparty/lzham-sdk/lzhamcomp/lzham_lzbase.cpp
+-  thirdparty/lzham-sdk/lzhamcomp/lzham_lzcomp.cpp
+-  thirdparty/lzham-sdk/lzhamcomp/lzham_lzcomp_internal.cpp
+-  thirdparty/lzham-sdk/lzhamcomp/lzham_lzcomp_state.cpp
+-  thirdparty/lzham-sdk/lzhamcomp/lzham_match_accel.cpp
++  /usr/include/lzham
++  /usr/include/lzma-sdk
+ )
+-
+ if (WIN32)
+     set(SOURCES_LZMA_OLD
+         thirdparty/lzma-old/7zip/Common/InBuffer.cpp
+@@ -141,10 +105,11 @@
+ ################################################################################
+ 
+ if (VSXU_STATIC EQUAL 1)
+-  add_library(${module_id} STATIC ${SOURCES} ${SOURCES_LZMA} ${SOURCES_LZHAM} ${SOURCES_LZMA_OLD} ${HEADER_FILES})
++  add_library(${module_id} STATIC ${SOURCES} ${SOURCES_LZMA_OLD} ${HEADER_FILES})
+ else ()
+-  add_library(${module_id} SHARED ${SOURCES} ${SOURCES_LZMA} ${SOURCES_LZHAM} ${SOURCES_LZMA_OLD} ${HEADER_FILES})
++  add_library(${module_id} SHARED ${SOURCES} ${SOURCES_LZMA_OLD} ${HEADER_FILES})
+ endif ()
++target_link_libraries(${module_id} lzhamdll lzmasdk)
+ 
+ install(TARGETS ${module_id} DESTINATION ${VSXU_INSTALL_LIB_DIR} COMPONENT common)
+ 
+--- vsxu-0.6.3/lib/compression/src/vsx_compression_lzham.cpp.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/lib/compression/src/vsx_compression_lzham.cpp	2020-03-29 20:39:36.759347650 +0200
+@@ -1,7 +1,7 @@
+ #include <stdio.h>
+ #include <stdint.h>
+ #include <vsx_compression_lzham.h>
+-#include <lib/compression/thirdparty/lzham-sdk/include/lzham.h>
++#include <lzham.h>
+ #include <string/vsx_string.h>
+ 
+ namespace vsx
+--- vsxu-0.6.3/lib/compression/src/vsx_compression_lzma.cpp.orig	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/lib/compression/src/vsx_compression_lzma.cpp	2020-03-29 20:39:48.219285567 +0200
+@@ -1,4 +1,4 @@
+-#include <lib/compression/thirdparty/lzma-sdk/C/LzmaLib.h>
++#include <LzmaLib.h>
+ #include <stdio.h>
+ #include <stdint.h>
+ #include <vsx_compression_lzma.h>
