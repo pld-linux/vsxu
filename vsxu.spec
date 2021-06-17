@@ -41,6 +41,7 @@ BuildRequires:	lzma-sdk-devel
 BuildRequires:	opencv-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	xorg-lib-libXrandr >= 1.3.0
 Requires:	OpenGL >= 2.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
