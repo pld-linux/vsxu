@@ -7,7 +7,7 @@ Summary:	VSXu Music Visualizer
 Summary(pl.UTF-8):	VSXu - wizualizacja muzyki
 Name:		vsxu
 Version:	0.6.3
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		Libraries
 #Source0Download: https://github.com/vovoid/vsxu/releases
@@ -22,6 +22,7 @@ Patch5:		%{name}-system-lzham-lzma.patch
 Patch6:		%{name}-system-cal3d.patch
 Patch7:		%{name}-format64.patch
 Patch8:		%{name}-pc.patch
+Patch9:		%{name}-cxx17_conflict.patch
 URL:		http://www.vsxu.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -105,6 +106,7 @@ Pliki nagłówkowe bibliotek VSXu.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 install -d build

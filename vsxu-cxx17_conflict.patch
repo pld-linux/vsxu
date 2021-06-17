@@ -1,0 +1,12 @@
+--- vsxu-0.6.3.orig/lib/common/include/math/vsx_math.h	2018-11-11 12:44:03.000000000 +0100
++++ vsxu-0.6.3/lib/common/include/math/vsx_math.h	2021-06-17 10:55:18.670208881 +0200
+@@ -50,7 +50,9 @@
+ 
+ #define CLAMP(N, L, U) (MAX(MIN((N), (U)), (L)))
+ 
++#if __cplusplus <= 201402L
+ #define clamp(N, L, U) (MAX(MIN((N), (U)), (L)))
++#endif
+ 
+ 
+ #define DOUBLE_EQUALS(A, B) \
