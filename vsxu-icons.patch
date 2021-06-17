@@ -1,8 +1,8 @@
 --- vsxu-0.6.3/lib/engine_graphics/CMakeLists.txt.orig	2013-11-24 11:00:51.000000000 +0100
 +++ vsxu-0.6.3/lib/engine_graphics/CMakeLists.txt	2014-01-04 21:46:30.230781413 +0100
 @@ -79,19 +79,19 @@
-   file(GLOB HEADERS "include/*.h")
-   install (FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/${VSXU_INSTALL_INCLUDE_DIR}/engine_graphics COMPONENT Devel)
+ if (UNIX OR VSXU_WINDOWS_LIB_BUILD)
+   install (DIRECTORY "include/" DESTINATION ${CMAKE_INSTALL_PREFIX}/${VSXU_INSTALL_INCLUDE_DIR}/engine_graphics COMPONENT Devel)
    install(FILES ${CMAKE_SOURCE_DIR}/share/icons/vsxu.xpm DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/)
 -  install(FILES ${CMAKE_SOURCE_DIR}/share/icons/hicolor/16x16/apps/vsxu.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/hicolor/apps/16x16)
 -  install(FILES ${CMAKE_SOURCE_DIR}/share/icons/hicolor/22x22/apps/vsxu.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/hicolor/apps/22x22)

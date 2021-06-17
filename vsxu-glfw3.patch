@@ -18,8 +18,8 @@
 -#include "GL/glfw.h"
 +#include <GLFW/glfw3.h>
  
- void vsx_mouse::set_cursor(int id)
- {
+ void vsx_mouse::set_cursor(int id) {
+   cursor = id;
 @@ -37,7 +37,7 @@
  {
    // This causes problems with knobs & arcballs, mouse visibility is disabled for now
